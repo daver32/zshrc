@@ -120,6 +120,15 @@ fi
 
 
 
+# RARE RAINBOW NEOFETCH
+if ( which neofetch > /dev/null ) && \
+   ( which lolcat > /dev/null ) && \
+   [ "$(($RANDOM%100))" -eq "1" ]
+then
+    alias neofetch="neofetch | lolcat"
+fi
+
+
 # OPTIONAL STARTUP SCRIPT
 ext_script="$ZDOTDIR/.zshrc-ext"
 if [ -e "$ext_script" ]
