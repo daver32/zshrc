@@ -67,7 +67,7 @@ bindkey "^[[H" beginning-of-line    # home
 bindkey "^[[F" end-of-line          # end
 bindkey "^[[3~" delete-char         # del
 bindkey "^[[3;5~" delete-word       # ctrl+del
-bindkey "\x7f" backward-delete-word # ctrl+backspace
+bindkey "^H" backward-delete-word   # ctrl+backspace
 
 
 # ALIASES:
