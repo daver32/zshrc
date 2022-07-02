@@ -29,7 +29,7 @@ _comp_options+=(globdots) # Include hidden files.
 
 
 # PROMPT:
-PROMPT='%F{39}%n@%m%f: %F{214}%~%f$ '
+PROMPT='%F{4}%n@%m%f: %F{2}%~%f$ '
 RPROMPT='$vcs_info_msg_0_ %F{245}r%f:%F{250}%?%f'
 
 
