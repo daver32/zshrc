@@ -72,13 +72,19 @@ bindkey "^H" backward-delete-word   # ctrl+backspace
 
 # ALIASES:
 alias ls="ls --color=auto" \
-      ll="ls -alhs" \
       mv="mv -iv" \
       cp="cp -iv" \
       mkdir="mkdir -pv" \
       rm="rm -vI" \
       grep="grep --color=auto" \
       diff="diff --color=auto" 
+
+if ( which exa > /dev/null ) 
+then
+    alias ll="exa -alhg --git --group-directories-first"
+else
+    alias ll="ls -alhs --group-directories-first"
+fi
 
 
 
