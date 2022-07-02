@@ -10,6 +10,12 @@ then
     export ZPLUGDIR=$ZDOTDIR/zsh-plugins
 fi
 
+# VCS INFO
+setopt PROMPT_SUBST
+autoload -Uz vcs_info # enable vcs_info
+precmd () { vcs_info } # always load before displaying the prompt
+zstyle ':vcs_info:*' formats ' %F{245}%s:%f%F{250}%b%f' # git(main)
+
 # TAB COMPLETION:
 autoload -Uz compinit
 zstyle ':completion:*' menu select
@@ -19,8 +25,8 @@ _comp_options+=(globdots) # Include hidden files.
 
 
 # PROMPT:
-PROMPT="%F{39}%n%f%F{39}@%f%F{39}%m%f:%~$ "
-RPROMPT="%h:%?"
+PROMPT='%F{39}%n@%m%f: %F{214}%~%f$ '
+RPROMPT='$vcs_info_msg_0_ %F{245}r%f:%F{250}%?%f'
 
 
 
