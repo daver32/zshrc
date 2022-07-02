@@ -10,11 +10,15 @@ then
     export ZPLUGDIR=$ZDOTDIR/zsh-plugins
 fi
 
+
+
 # VCS INFO
 setopt PROMPT_SUBST
 autoload -Uz vcs_info # enable vcs_info
 precmd () { vcs_info } # always load before displaying the prompt
-zstyle ':vcs_info:*' formats ' %F{245}%s:%f%F{250}%b%f' # git(main)
+zstyle ':vcs_info:*' formats ' %F{245}%s:%f%F{250}%b%f' # git:master
+
+
 
 # TAB COMPLETION:
 autoload -Uz compinit
