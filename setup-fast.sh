@@ -51,7 +51,7 @@ zprofile="$HOME/.zprofile"
 mkdir -p "$zdotdir"
 ln -s "$zshrc" "$zdotdir/.zshrc" || exit 1
 echo "export ZDOTDIR=\"$HOME/.config/zsh\"" >> $zprofile || exit 1
-echo "export ZPLUGDIR=\"$ZDOTDIR/plugins\"" >> $zprofile || exit 1
+echo "export ZPLUGDIR=\"$zdotdir/plugins\"" >> $zprofile || exit 1
 mkdir -p "$HOME/.local/share/zsh/" || exit 1
 touch "$HOME/.local/share/zsh/.histfile" || exit 1
 
