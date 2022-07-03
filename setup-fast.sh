@@ -3,7 +3,7 @@
 help () {
 	echo "Quick auto installer:"
     echo "  Puts a symlink to .zshrc in \"~/.config/.zshrc.\""
-    echo "  Creates a \"~/.zprofile\" with appropriate variables."
+    echo "  Creates a \"~/.zshenv\" with appropriate variables."
     echo "  Creates the history file in the default location."
     echo "Example usage:"
     echo "  setup-fast.sh /path/to/cloned/repo"
@@ -45,13 +45,13 @@ zshrc="$repo_dir/.zshrc"
 zdotdir="$HOME/.config/zsh"
 [ -e $zdotdir ] && exit_err "ERROR: $zdotdir already exists"
 
-zprofile="$HOME/.zprofile"
-[ -e $zprofile ] && exit_err "ERROR: $zprofile already exists"
+zshenv="$HOME/.zshenv"
+[ -e $zshenv ] && exit_err "ERROR: $zshenv already exists"
 
 mkdir -p "$zdotdir"
 ln -s "$zshrc" "$zdotdir/.zshrc" || exit 1
-echo "export ZDOTDIR=\"$HOME/.config/zsh\"" >> $zprofile || exit 1
-echo "export ZPLUGDIR=\"$zdotdir/plugins\"" >> $zprofile || exit 1
+echo "export ZDOTDIR=\"$HOME/.config/zsh\"" >> $zshenv || exit 1
+echo "export ZPLUGDIR=\"$zdotdir/plugins\"" >> $zshenv || exit 1
 mkdir -p "$HOME/.local/share/zsh/" || exit 1
 touch "$HOME/.local/share/zsh/.histfile" || exit 1
 
