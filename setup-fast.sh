@@ -10,7 +10,7 @@ help () {
 	exit 0
 }
 
-(( $# < 1 )) && help
+[ "$#" -lt 1 ] && help
 
 warn_if_not_found() {
     ( which $1 > /dev/null 2>&1 ) || echo "WARNING: $1 not found"
@@ -20,7 +20,7 @@ warn_if_not_found "zsh"
 warn_if_not_found "git"
 
 echoerr () { 
-    cat <<< "$@" 1>&2; 
+    printf "%s\n" "$*" >&2;
 }
 
 exit_err () {
