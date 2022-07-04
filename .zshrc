@@ -2,8 +2,9 @@ bindkey -e
 
 [ -z "$ZDOTDIR" ] && export ZDOTDIR=$HOME
 [ -z "$ZPLUGDIR" ] && export ZPLUGDIR=$ZDOTDIR/zsh-plugins
-
-
+[ -z "$HISTFILE" ] && export HISTFILE=~/.local/share/zsh/.histfile
+[ -z "$HISTSIZE" ] && export HISTSIZE=10000
+[ -z "$SAVEHIST" ] && export SAVEHIST=10000
 
 # COMMAND TIME TAKEN
 
@@ -84,13 +85,6 @@ _comp_options+=(globdots) # Include hidden files.
 # PROMPT:
 PROMPT='%F{4}%n@%m%f: %F{2}%~%f$ '
 RPROMPT='$vcs_info_msg_0_ %F{245}r%f:%F{250}%?%f%F{4}$cmd_time_taken%f'
-
-
-
-# HISTORY:
-HISTFILE=~/.local/share/zsh/.histfile
-HISTSIZE=10000
-SAVEHIST=10000
 
 
 
