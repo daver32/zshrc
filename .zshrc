@@ -117,7 +117,7 @@ source_git_plugin()
 source_git_plugin "https://github.com/zsh-users/zsh-autosuggestions"
 source_git_plugin "https://github.com/zsh-users/zsh-syntax-highlighting"
 
-# COLORFUL MANPAGES:
+# BAT:
 if ( which bat > /dev/null )
 then 
     export MANPAGER="sh -c 'col -bx | bat -l man -p'"
