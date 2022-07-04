@@ -12,6 +12,63 @@ fi
 
 
 
+# COMMAND TIME TAKEN
+
+cmd_time_begin=""
+cmd_time_taken=""
+
+unix_time_ms () {
+    seconds="$(date +%s.%N)"
+    (( milliseconds = $seconds * 1000 ))
+    echo $milliseconds
+}
+
+time_measure_begin () {
+    cmd_time_begin=$(unix_time_ms)
+}
+
+time_measure_end () {
+    if [ "$cmd_time_begin" = "" ]
+    then
+        return
+    fi
+
+    (( cmd_time_taken = $(unix_time_ms) - $cmd_time_begin))
+
+    # The time is rounded to the nearest second. The measurement itself may take a long time (tens of ms, perhaps hundreds on slower machines),
+    # so being more precise is kinda pointless.
+    if (( $cmd_time_taken < 1000.0 ))
+    then
+        cmd_time_taken=" <1s"
+    else
+        integer seconds=$(($cmd_time_taken / 1000.0 + 0.5))
+
+        integer hours=$(($seconds / 3600))
+        integer seconds=$(($seconds % 3600))
+
+        integer minutes=$(($seconds / 60))
+        integer seconds=$(($seconds % 60))
+
+        if [ $hours -ne 0 ]
+        then
+            cmd_time_taken=" ~$hours"h" $minutes"m" $seconds"s
+        elif [ $minutes -ne 0 ]
+        then
+            cmd_time_taken=" ~$minutes"m" $seconds"s
+        else
+            cmd_time_taken=" ~$seconds"s
+        fi
+    fi
+
+
+    cmd_time_begin=""
+}
+
+preexec_functions+=(time_measure_begin)
+precmd_functions+=(time_measure_end)
+
+
+
 # VCS INFO
 setopt PROMPT_SUBST
 autoload -Uz vcs_info # enable vcs_info
@@ -30,7 +87,7 @@ _comp_options+=(globdots) # Include hidden files.
 
 # PROMPT:
 PROMPT='%F{4}%n@%m%f: %F{2}%~%f$ '
-RPROMPT='$vcs_info_msg_0_ %F{245}r%f:%F{250}%?%f'
+RPROMPT='$vcs_info_msg_0_ %F{245}r%f:%F{250}%?%f%F{4}$cmd_time_taken%f'
 
 
 
@@ -61,6 +118,7 @@ source-github-plugin () {
 
 source-github-plugin "zsh-users/zsh-autosuggestions"
 source-github-plugin "zsh-users/zsh-syntax-highlighting"
+source-github-plugin "popstas/zsh-command-time"
 
 # COLORFUL MANPAGES:
 if ( which bat > /dev/null )
