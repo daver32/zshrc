@@ -107,22 +107,22 @@ source_file_if_exists()
     [ -e $1 ] && source $1
 }
 
-source_github_plugin()
+source_git_plugin()
 { 
     ( which git > /dev/null ) || return
 
     plugin_name=$(echo $1 | cut -d "/" -f 2)
     if [ ! -d "$ZPLUGDIR/$plugin_name" ]
     then 
-        git clone "https://github.com/$1.git" "$ZPLUGDIR/$plugin_name"
+        git clone "$1" "$ZPLUGDIR/$plugin_name"
     fi
 
     source_file_if_exists "$ZPLUGDIR/$plugin_name/$plugin_name.plugin.zsh" || \
     source_file_if_exists "$ZPLUGDIR/$plugin_name/$plugin_name.zsh"
 }
 
-source_github_plugin "zsh-users/zsh-autosuggestions"
-source_github_plugin "zsh-users/zsh-syntax-highlighting"
+source_git_plugin "https://github.com/zsh-users/zsh-autosuggestions"
+source_git_plugin "https://github.com/zsh-users/zsh-syntax-highlighting"
 
 # COLORFUL MANPAGES:
 if ( which bat > /dev/null )
