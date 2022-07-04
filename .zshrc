@@ -123,7 +123,6 @@ source_github_plugin()
 
 source_github_plugin "zsh-users/zsh-autosuggestions"
 source_github_plugin "zsh-users/zsh-syntax-highlighting"
-source_github_plugin "popstas/zsh-command-time"
 
 # COLORFUL MANPAGES:
 if ( which bat > /dev/null )
