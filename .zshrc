@@ -1,14 +1,7 @@
 bindkey -e
 
-if [ -z "$ZDOTDIR" ]
-then
-    export ZDOTDIR=$HOME
-fi
-
-if [ -z "$ZPLUGDIR" ]
-then
-    export ZPLUGDIR=$ZDOTDIR/zsh-plugins
-fi
+[ -z "$ZDOTDIR" ] && export ZDOTDIR=$HOME
+[ -z "$ZPLUGDIR" ] && export ZPLUGDIR=$ZDOTDIR/zsh-plugins
 
 
 
