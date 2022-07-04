@@ -98,7 +98,13 @@ source_git_plugin()
 { 
     ( which git > /dev/null ) || return
 
-    plugin_name=$(echo $1 | cut -d "/" -f 2)
+    if [ -z $2 ]
+    then
+        plugin_name=$(echo $1 | awk -F'/' '{ print $NF }')
+    else
+        plugin_name=$2
+    fi
+
     if [ ! -d "$ZPLUGDIR/$plugin_name" ]
     then 
         git clone "$1" "$ZPLUGDIR/$plugin_name"
