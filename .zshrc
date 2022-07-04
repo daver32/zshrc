@@ -17,17 +17,20 @@ fi
 cmd_time_begin=""
 cmd_time_taken=""
 
-unix_time_ms () {
+unix_time_ms() 
+{
     seconds="$(date +%s.%N)"
     (( milliseconds = $seconds * 1000 ))
     echo $milliseconds
 }
 
-time_measure_begin () {
+time_measure_begin() 
+{
     cmd_time_begin=$(unix_time_ms)
 }
 
-time_measure_end () {
+time_measure_end()
+{
     if [ "$cmd_time_begin" = "" ]
     then
         return
@@ -99,11 +102,13 @@ SAVEHIST=10000
 
 
 # SOURCE PLUGINS:
-source-file-if-exists () {
+source_file_if_exists()
+{
     [ -e $1 ] && source $1
 }
 
-source-github-plugin () { 
+source_github_plugin()
+{ 
     ( which git > /dev/null ) || return
 
     plugin_name=$(echo $1 | cut -d "/" -f 2)
@@ -112,13 +117,13 @@ source-github-plugin () {
         git clone "https://github.com/$1.git" "$ZPLUGDIR/$plugin_name"
     fi
 
-    source-file-if-exists "$ZPLUGDIR/$plugin_name/$plugin_name.plugin.zsh" || \
-    source-file-if-exists "$ZPLUGDIR/$plugin_name/$plugin_name.zsh"
+    source_file_if_exists "$ZPLUGDIR/$plugin_name/$plugin_name.plugin.zsh" || \
+    source_file_if_exists "$ZPLUGDIR/$plugin_name/$plugin_name.zsh"
 }
 
-source-github-plugin "zsh-users/zsh-autosuggestions"
-source-github-plugin "zsh-users/zsh-syntax-highlighting"
-source-github-plugin "popstas/zsh-command-time"
+source_github_plugin "zsh-users/zsh-autosuggestions"
+source_github_plugin "zsh-users/zsh-syntax-highlighting"
+source_github_plugin "popstas/zsh-command-time"
 
 # COLORFUL MANPAGES:
 if ( which bat > /dev/null )
@@ -160,7 +165,8 @@ fi
 # TODO make this more generic?
 if ( which lf > /dev/null )
 then
-    lfcd () {
+    lfcd()
+    {
         tmp="$(mktemp)"
         trap 'rm -f $tmp >/dev/null 2>&1' HUP INT QUIT TERM PWR EXIT >/dev/null 2>&1
         lf -last-dir-path="$tmp"
@@ -171,8 +177,9 @@ then
     bindkey -s "^o" "lfcd\n" # ctrl+o
 elif ( which ranger > /dev/null )
 then
-    rangercd () {
-        tmp="$(mktemp)"
+    rangercd()
+    {
+        tmp="$(mktemp)" 
         trap 'rm -f $tmp >/dev/null 2>&1' HUP INT QUIT TERM PWR EXIT >/dev/null 2>&1
         ranger --choosedir="$tmp"
         dir="$(cat "$tmp")"
@@ -186,10 +193,11 @@ fi
 # DOLPHIN BIND:
 if ( which dolphin > /dev/null )
 then
-    open-dolphin () {
+    open_dolphin()
+    {
         dolphin "$(pwd)" >/dev/null 2>&1 &
     }
-    bindkey -s "^e" "open-dolphin\n" # ctrl+e
+    bindkey -s "^e" "open_dolphin\n" # ctrl+e
 fi
 
 

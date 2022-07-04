@@ -1,6 +1,7 @@
 #!/bin/sh
 
-help () {
+help()
+{
 	echo "Quick auto installer:"
     echo "  Puts a symlink to .zshrc in \"~/.config/.zshrc.\""
     echo "  Creates a \"~/.zshenv\" with appropriate variables."
@@ -12,23 +13,27 @@ help () {
 
 [ "$#" -lt 1 ] && help
 
-warn_if_not_found() {
+warn_if_not_found()
+{
     ( which $1 > /dev/null 2>&1 ) || echo "WARNING: $1 not found"
 }
 
 warn_if_not_found "zsh"
 warn_if_not_found "git"
 
-echoerr () { 
+echoerr()
+{ 
     printf "%s\n" "$*" >&2;
 }
 
-exit_err () {
+exit_err()
+{
     echoerr $1
     exit 1
 }
 
-full_path () {
+full_path()
+{
   case "$1" in
     /*) printf '%s\n' "$1";;
     *) printf '%s\n' "$PWD/$1";;
