@@ -161,11 +161,10 @@ fi
 
 
 
-# RANGER NAVIGATION:
-# TODO make this more generic?
+# RANGER/LF NAVIGATION:
 if ( which lf > /dev/null )
 then
-    lfcd()
+    intcd()
     {
         tmp="$(mktemp)"
         trap 'rm -f $tmp >/dev/null 2>&1' HUP INT QUIT TERM PWR EXIT >/dev/null 2>&1
@@ -174,10 +173,9 @@ then
         command rm -f $tmp
         [ -d $dir ] && [ "$dir" != "$(pwd)" ] && cd $dir
     }
-    bindkey -s "^o" "lfcd\n" # ctrl+o
 elif ( which ranger > /dev/null )
 then
-    rangercd()
+    intcd()
     {
         tmp="$(mktemp)" 
         trap 'rm -f $tmp >/dev/null 2>&1' HUP INT QUIT TERM PWR EXIT >/dev/null 2>&1
@@ -186,8 +184,9 @@ then
         command rm -f $tmp
         [ -d $dir ] && [ "$dir" != "$(pwd)" ] && cd $dir
     }
-    bindkey -s "^o" "rangercd\n" # ctrl+o
 fi
+
+$( typeset -f intcd > /dev/null ) && bindkey -s "^o" "intcd\n" # ctrl+o
 
 
 # DOLPHIN BIND:
