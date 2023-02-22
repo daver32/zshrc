@@ -129,7 +129,12 @@ alias ls="ls --color=auto" \
       mkdir="mkdir -pv" \
       rm="rm -vI" \
       grep="grep --color=auto" \
-      diff="diff --color=auto" 
+      diff="diff --color=auto" \
+      u="cd .." \
+      uu="cd ../.." \
+      uuu="cd ../../.." \
+      uuuu="cd ../../../.." \
+      uuuuu="cd ../../../../.." 
 
 ( which exa > /dev/null ) &&
     alias ll="exa -alhg --git --group-directories-first" ||
