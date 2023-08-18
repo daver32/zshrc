@@ -106,7 +106,6 @@ source_git_plugin "https://github.com/zsh-users/zsh-syntax-highlighting"
 # BAT:
 if ( which bat > /dev/null )
 then 
-    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
     alias cat="bat --pager=never"
 fi
 
@@ -189,6 +188,39 @@ if ( which neofetch > /dev/null ) && \
 then
     alias neofetch="neofetch | lolcat"
 fi
+
+
+# OPEN CUSTOM TMUX SESH IN A DIR
+devmode() 
+{
+    editor="vi"
+    if ( which nvim > /dev/null )
+    then
+        editor="nvim"
+    elif ( which vim > /dev/null )
+    then
+        editor="vim"
+    fi
+
+    target_dir="$1"
+    session_name_base="devmode"
+    session_name="$session_name_base"
+
+    # generate a unique name    
+    count=1
+    while tmux has-session -t "$session_name" 2>/dev/null; do
+        session_name="$session_name_base-$count"
+        count=$((count + 1))
+    done
+
+    tmux new-session -d -s "$session_name" -c "$target_dir"
+    tmux send-keys -t "$session_name" "$editor" Enter
+    tmux split-window -h -t "$session_name"
+    tmux split-window -v -t "$session_name"
+    tmux resize-pane -t "$session_name" -R 128
+
+    tmux attach-session -t "$session_name"
+}
 
 
 # OPTIONAL STARTUP SCRIPT
