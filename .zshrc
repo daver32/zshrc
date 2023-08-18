@@ -218,6 +218,7 @@ devmode()
     tmux split-window -h -t "$session_name"
     tmux split-window -v -t "$session_name"
     tmux resize-pane -t "$session_name" -R 128
+    tmux select-pane -t0
 
     tmux attach-session -t "$session_name"
 }
