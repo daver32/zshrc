@@ -226,4 +226,4 @@ devmode()
 
 # OPTIONAL STARTUP SCRIPT
 ext_script="$ZDOTDIR/.zshrc-ext"
-[ -e "$ext_script" ] && $ext_script
+[ -e "$ext_script" ] && source $ext_script
