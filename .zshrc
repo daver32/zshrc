@@ -135,7 +135,7 @@ alias ls="ls --color=auto" \
       uuuu="cd ../../../.." \
       uuuuu="cd ../../../../.." 
 
-ll_exa_args="-algh --git --group-directories-first"
+ll_exa_args="-alghu --git --group-directories-first"
 if ( which eza > /dev/null )
 then
     alias ll="eza $ll_exa_args"
