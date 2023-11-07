@@ -135,6 +135,47 @@ function _set_beam_cursor() {
 
 precmd_functions+=(_set_beam_cursor)
 
+_last_escape_key_pressed=""
+_last_escape_key_press_time=""
+
+function _record_escape_key() {
+    local key="$1"
+    LBUFFER+="$key"
+    _last_escape_key_pressed="$key"
+    _last_escape_key_press_time=$(unix_time_ms)
+}
+
+function _try_escape() {
+    local key_1="$1"
+    local key_2="$2"
+
+    if [[ "$_last_escape_key_pressed" != "$key_1" ]]; then
+        _record_escape_key "$key_2"
+        return
+    fi
+
+    local time_taken=$(($(unix_time_ms) - $_last_escape_key_press_time))
+    if [[ $time_taken -lt 150 ]]; then
+        zle vi-backward-delete-char # delete the last character
+        zle vi-cmd-mode  # switch to normal mode
+        return
+    fi
+
+    _record_escape_key "$key_2"
+}
+
+function _escape_j() {
+    _try_escape "k" "j"
+}
+
+function _escape_k () {
+    _try_escape "j" "k"
+}
+
+zle -N _escape_j
+zle -N _escape_k
+bindkey -M viins "j" _escape_j
+bindkey -M viins "k" _escape_k
 
 # ALIASES:
 alias ls="ls --color=auto" \
