@@ -111,14 +111,29 @@ fi
 
 
 
-# BASIC NAV KEY BINDINGS:
-bindkey "^[[1;5D" backward-word     # ctrl+left
-bindkey "^[[1;5C" forward-word      # ctrl+right
-bindkey "^[[H" beginning-of-line    # home
-bindkey "^[[F" end-of-line          # end
-bindkey "^[[3~" delete-char         # del
-bindkey "^[[3;5~" delete-word       # ctrl+del
-bindkey "^H" backward-delete-word   # ctrl+backspace
+# VI MODE:
+set -o vi
+
+KEYTIMEOUT=5 # Remove mode switching delay.
+
+function zle-keymap-select {
+    if [[ ${KEYMAP} == vicmd ]] ||
+        [[ $1 = 'block' ]]; then
+        echo -ne '\e[1 q'
+    elif [[ ${KEYMAP} == main ]] ||
+        [[ ${KEYMAP} == viins ]] ||
+        [[ ${KEYMAP} = '' ]] ||
+        [[ $1 = 'beam' ]]; then
+        echo -ne '\e[5 q'
+    fi
+}
+zle -N zle-keymap-select
+
+function _set_beam_cursor() {
+   echo -ne '\e[5 q'
+}
+
+precmd_functions+=(_set_beam_cursor)
 
 
 # ALIASES:
