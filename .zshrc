@@ -111,22 +111,26 @@ set -o vi
 
 KEYTIMEOUT=5 # Remove mode switching delay.
 
+function _set_beam_cursor() {
+    echo -ne '\e[6 q'
+}
+
+function _set_block_cursor() {
+    echo -ne '\e[1 q'
+}
+
 function zle-keymap-select {
-    if [[ ${KEYMAP} == vicmd ]] ||
-        [[ $1 = 'block' ]]; then
-        echo -ne '\e[1 q'
+    if   [[ ${KEYMAP} == vicmd ]] ||
+         [[ $1 = 'block' ]]; then
+        _set_block_cursor
     elif [[ ${KEYMAP} == main ]] ||
-        [[ ${KEYMAP} == viins ]] ||
-        [[ ${KEYMAP} = '' ]] ||
-        [[ $1 = 'beam' ]]; then
-        echo -ne '\e[5 q'
+         [[ ${KEYMAP} == viins ]] ||
+         [[ ${KEYMAP} = '' ]] ||
+         [[ $1 = 'beam' ]]; then
+        _set_beam_cursor
     fi
 }
 zle -N zle-keymap-select
-
-function _set_beam_cursor() {
-    echo -ne '\e[5 q'
-}
 
 precmd_functions+=(_set_beam_cursor)
 
