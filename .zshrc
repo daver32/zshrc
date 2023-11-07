@@ -13,20 +13,17 @@ bindkey -e
 cmd_time_begin=""
 cmd_time_taken=""
 
-unix_time_ms() 
-{
+unix_time_ms() {
     seconds="$(date +%s.%N)"
     (( milliseconds = $seconds * 1000 ))
     echo $milliseconds
 }
 
-time_measure_begin() 
-{
+time_measure_begin() {
     cmd_time_begin=$(unix_time_ms)
 }
 
-time_measure_end()
-{
+time_measure_end() {
     [ "$cmd_time_begin" = "" ] && return
 
     cmd_time_taken=$(($(unix_time_ms) - $cmd_time_begin))
@@ -81,13 +78,11 @@ RPROMPT='$vcs_info_msg_0_ %F{245}r%f:%F{250}%?%f%F{4}$cmd_time_taken%f'
 
 
 # SOURCE PLUGINS:
-source_file_if_exists()
-{
+source_file_if_exists() {
     [ -e $1 ] && source $1
 }
 
-source_git_plugin()
-{ 
+source_git_plugin() { 
     ( which git > /dev/null ) || return
 
     [ -z $2 ] && 
@@ -203,8 +198,7 @@ else
 fi
 
 # RANGER/LF NAVIGATION:
-intcd()
-{
+intcd() {
     tmp="$(mktemp)"
     trap 'rm -f $tmp >/dev/null 2>&1' HUP INT QUIT TERM PWR EXIT >/dev/null 2>&1
     runintcd "$tmp" # run the interactive directory browser
@@ -215,14 +209,12 @@ intcd()
 
 if ( which lf > /dev/null )
 then
-    runintcd()
-    {
+    runintcd() {
         lf -last-dir-path="$1"
     }
 elif ( which ranger > /dev/null )
 then
-    runintcd()
-    {
+    runintcd() {
         ranger --choosedir="$1"
     }
 fi
@@ -233,8 +225,7 @@ $( typeset -f runintcd > /dev/null ) && bindkey -s "^o" "intcd\n" # ctrl+o
 # DOLPHIN BIND:
 if ( which dolphin > /dev/null )
 then
-    open_dolphin()
-    {
+    open_dolphin() {
         dolphin "$(pwd)" >/dev/null 2>&1 &
     }
     bindkey -s "^e" "open_dolphin\n" # ctrl+e
