@@ -125,7 +125,7 @@ function zle-keymap-select {
 zle -N zle-keymap-select
 
 function _set_beam_cursor() {
-   echo -ne '\e[5 q'
+    echo -ne '\e[5 q'
 }
 
 precmd_functions+=(_set_beam_cursor)
