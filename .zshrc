@@ -1,12 +1,14 @@
 bindkey -e
 
 # DEFAULT VARIABLES
-[ -z "$ZDOTDIR" ] && export ZDOTDIR=$HOME
-[ -z "$ZPLUGDIR" ] && export ZPLUGDIR=$ZDOTDIR/zsh-plugins
-[ -z "$HISTFILE" ] && export HISTFILE=~/.local/share/zsh/.histfile
-[ -z "$HISTSIZE" ] && export HISTSIZE=10000
-[ -z "$SAVEHIST" ] && export SAVEHIST=10000
+export ZDOTDIR=$HOME/.config/zsh
+export ZPLUGDIR=$ZDOTDIR/zsh-plugins
+export HISTFILE=~/.local/share/zsh/.histfile
+export HISTSIZE=10000
+export SAVEHIST=10000
 
+setopt appendhistory
+setopt SHARE_HISTORY
 
 
 # COMMAND TIME TAKEN
