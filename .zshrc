@@ -228,15 +228,6 @@ fi
 $( typeset -f runintcd > /dev/null ) && bindkey -s "^o" "intcd\n" # ctrl+o
 
 
-# DOLPHIN BIND:
-if ( which dolphin > /dev/null )
-then
-    open_dolphin() {
-        dolphin "$(pwd)" >/dev/null 2>&1 &
-    }
-    bindkey -s "^e" "open_dolphin\n" # ctrl+e
-fi
-
 # OPTIONAL STARTUP SCRIPT
 ext_script="$ZDOTDIR/.zshrc-ext"
 [ -e "$ext_script" ] && source $ext_script
