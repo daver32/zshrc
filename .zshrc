@@ -10,6 +10,8 @@ export SAVEHIST=10000
 setopt appendhistory
 setopt SHARE_HISTORY
 
+set -o pipefail
+
 
 # COMMAND TIME TAKEN
 cmd_time_begin=""
@@ -227,6 +229,23 @@ fi
 
 $( typeset -f runintcd > /dev/null ) && bindkey -s "^o" "intcd\n" # ctrl+o
 
+# FZF HISTORY
+
+if ( which fzf > /dev/null )
+then
+    _fzf_history() {
+        local result="$(cat "$HISTFILE" | sed 's/^[^;]*;//' | sort | uniq | fzf)"
+
+        if [ -n "$result" ]; then
+            LBUFFER+="$result"
+        fi
+    }
+
+    local keymap="^r"
+    zle -N _fzf_history
+    bindkey -M vicmd "$keymap" _fzf_history
+    bindkey -M viins "$keymap" _fzf_history
+fi
 
 # OPTIONAL STARTUP SCRIPT
 ext_script="$ZDOTDIR/.zshrc-ext"
