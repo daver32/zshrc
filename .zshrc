@@ -238,7 +238,10 @@ $( typeset -f runintcd > /dev/null ) && bindkey -s "^o" "intcd\n" # ctrl+o
 if ( which fzf > /dev/null )
 then
     _fzf_history() {
-        local result="$(cat "$HISTFILE" | sed 's/^[^;]*;//' | sort | uniq | fzf)"
+        # using sed to:
+        # - remove ZSH-generated leading info (separated by ";")
+        # - trim the lines
+        local result="$(cat "$HISTFILE" | sed 's/^[^;]*;//' | sed 's/\s*//' | sed 's/\s*$//' | sort | uniq | fzf)"
 
         if [ -n "$result" ]; then
             LBUFFER+="$result"
