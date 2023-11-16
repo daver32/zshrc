@@ -194,16 +194,20 @@ alias ls="ls --color=auto" \
       uuuu="cd ../../../.." \
       uuuuu="cd ../../../../.." 
 
-ll_exa_args="-alghu --git --group-directories-first"
+_ll_exa_args="-alghu --git --group-directories-first"
+
 if ( which eza > /dev/null )
 then
-    alias ll="eza $ll_exa_args"
+    _alias_ll="eza $_ll_exa_args"
 elif ( which exa > /dev/null )
 then
-    alias ll="exa $ll_exa_args"
+    _alias_ll="exa $_ll_exa_args"
 else
-    alias ll="ls -alhs --group-directories-first"
+    _alias_ll="ls -alhs --group-directories-first"
 fi
+
+alias ll="$_alias_ll"
+alias la="$_alias_ll"
 
 # RANGER/LF NAVIGATION:
 intcd() {
