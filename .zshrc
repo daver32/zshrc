@@ -116,7 +116,7 @@ set -o vi
 KEYTIMEOUT=5 # Remove mode switching delay.
 
 function _set_beam_cursor() {
-    echo -ne '\e[6 q'
+    echo -ne '\e[5 q'
 }
 
 function _set_block_cursor() {
