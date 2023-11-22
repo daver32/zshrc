@@ -258,6 +258,22 @@ then
     bindkey -M viins "$keymap" _fzf_history
 fi
 
+# FIND GIT REPOS
+if ( which fzf > /dev/null )
+then
+    fzfgit() {
+        local dir="$1"
+        if [ -z "$dir" ]; then
+            dir="$PWD"
+        fi
+            
+        local result="$(find "$dir" -name ".git" -type d -prune -exec dirname {} \; 2>/dev/null | fzf)"
+        if [ -n "$result" ]; then
+            cd "$result"
+        fi
+    }
+fi
+
 # OPTIONAL STARTUP SCRIPT
 ext_script="$ZDOTDIR/.zshrc-ext"
 [ -e "$ext_script" ] && source $ext_script
