@@ -222,12 +222,12 @@ intcd() {
 if ( which lf > /dev/null )
 then
     runintcd() {
-        lf -last-dir-path="$1"
+        ranger --choosedir="$1"
     }
 elif ( which ranger > /dev/null )
 then
     runintcd() {
-        ranger --choosedir="$1"
+        lf -last-dir-path="$1"
     }
 fi
 
