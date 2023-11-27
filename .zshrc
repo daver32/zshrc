@@ -209,6 +209,11 @@ fi
 alias ll="$_alias_ll"
 alias la="$_alias_ll"
 
+if ( which bc > /dev/null )
+then
+    alias bc="bc -l"
+fi
+
 # RANGER/LF NAVIGATION:
 intcd() {
     tmp="$(mktemp)"
