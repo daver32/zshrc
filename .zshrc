@@ -211,6 +211,7 @@ alias la="$_alias_ll"
 
 if ( which bc > /dev/null )
 then
+    # make bc useful
     alias bc="bc -l"
 fi
 
