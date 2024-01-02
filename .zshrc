@@ -138,6 +138,16 @@ zle -N zle-keymap-select
 
 precmd_functions+=(_set_beam_cursor)
 
+# backspace doesnt really work properly when moving between insert/normal mode, 
+# maybe because of my jk binding, so workaround here
+function _backspace_fix() {
+    length=$((${#LBUFFER}-1))
+    LBUFFER=$(expr substr "$LBUFFER" 1 $length)
+}
+
+zle -N _backspace_fix
+bindkey -M viins "^?" _backspace_fix
+
 _last_escape_key_pressed=""
 _last_escape_key_press_time=""
 
@@ -159,8 +169,8 @@ function _try_escape() {
 
     local time_taken=$(($(unix_time_ms) - $_last_escape_key_press_time))
     if [[ $time_taken -lt 150 ]]; then
-        zle vi-backward-delete-char # delete the last character
-        zle vi-cmd-mode  # switch to normal mode
+        _backspace_fix # delete the last character
+        zle vi-cmd-mode # switch to normal mode
         return
     fi
 
