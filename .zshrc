@@ -138,6 +138,9 @@ zle -N zle-keymap-select
 
 precmd_functions+=(_set_beam_cursor)
 
+bindkey -M vicmd 'H' vi-beginning-of-line
+bindkey -M vicmd 'L' vi-end-of-line
+
 # backspace doesnt really work properly when moving between insert/normal mode, 
 # maybe because of my jk binding, so workaround here
 function _backspace_fix() {
