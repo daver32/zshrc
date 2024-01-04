@@ -293,6 +293,42 @@ then
     }
 fi
 
+# TMUX SCROLLBACK EDITOR
+function sb() {
+    if [ -z "$TMUX" ]; then
+        echo "Not in tmux session"
+        return
+    fi
+    
+    local filename="/tmp/scrollback_$(unix_time_ms)"
+    # funny way to say "string.trim()"
+    # its weird looking because it has to work on the whole file, not just individual lines
+    local sed_trim_pattern=':a /^\s*$/{n; ba}; p; :b n; p; bb' 
+    tmux capture-pane -pJ -S-32768 | sed -n "$sed_trim_pattern" | tac | sed -n "$sed_trim_pattern" | tac > $filename
+
+    local editor
+    if ( which nvim > /dev/null ); then
+        editor="nvim"
+    elif ( which vim > /dev/null ); then
+        editor="vim"
+    fi
+
+    if [ -z "$editor" ]; then
+        editor="$EDITOR"
+    fi
+
+    if [ -z "$editor" ]; then
+        editor="vim"
+    fi
+
+    local end_file_arg=""
+    if [[ $editor == "vim" || $editor == "nvim" ]]; then
+        end_file_arg="+"
+    fi
+    
+    $editor $end_file_arg $filename 
+}
+
 # OPTIONAL STARTUP SCRIPT
 ext_script="$ZDOTDIR/.zshrc-ext"
 [ -e "$ext_script" ] && source $ext_script
