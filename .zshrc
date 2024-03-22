@@ -205,7 +205,8 @@ alias ls="ls --color=auto" \
       uu="cd ../.." \
       uuu="cd ../../.." \
       uuuu="cd ../../../.." \
-      uuuuu="cd ../../../../.." 
+      uuuuu="cd ../../../../.." \
+      nivm="nvim"
 
 _ll_exa_args="-alghu --git --group-directories-first"
 
