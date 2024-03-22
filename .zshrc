@@ -258,14 +258,12 @@ $( typeset -f runintcd > /dev/null ) && bindkey -s "^o" "intcd\n" # ctrl+o
 if ( which fzf > /dev/null )
 then
     _fzf_history() {
-        # tac:
-        # - reverse the order (display last command first)
         # sed:
         # - remove ZSH-generated leading info (separated by ";")
         # - trim whitespace
         # awk:
         # - remove duplicate lines
-        local result="$(tac "$HISTFILE" | sed 's/^[^;]*;//' | sed 's/\s*//' | sed 's/\s*$//' | awk '!seen[$0]++' | fzf)"
+        local result="$(tac "$HISTFILE" | sed -e 's/^[^;]*;//' -e 's/\s*//' -e 's/\s*$//' | awk '!seen[$0]++' | fzf)"
 
         if [ -n "$result" ]; then
             LBUFFER+="$result"
