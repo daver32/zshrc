@@ -263,7 +263,7 @@ then
         # - trim whitespace
         # awk:
         # - remove duplicate lines
-        local result="$(tac "$HISTFILE" | sed -e 's/^[^;]*;//' -e 's/\s*//' -e 's/\s*$//' | awk '!seen[$0]++' | fzf)"
+        local result="$(tac "$HISTFILE" | sed -e 's/^[^;]*;//' -e 's/\s*//' -e 's/\s*$//' | awk '!seen[$0]++' | fzf --scheme=history)"
 
         if [ -n "$result" ]; then
             LBUFFER+="$result"
